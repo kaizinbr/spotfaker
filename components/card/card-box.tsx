@@ -6,7 +6,6 @@ import { toPng
 import Uploader from "@/components/uploader";
 
 import React from "react";
-import { EmblaOptionsType } from "embla-carousel-react";
 import "../css/base.css";
 import "../css/sandbox.css";
 import "../css/embla.css";
