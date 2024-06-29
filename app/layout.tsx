@@ -1,11 +1,11 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 
-
-// export const metadata = {
-//   title: 'Vercel Blob Starter',
-//   description: 'A simple Next.js app with Vercel Blob for image uploads',
-// }
+export const metadata = {
+  title: 'Spotfaker - Kaizin',
+  description: 'esconda quem não deveria aparecer na sua máquina do tempo',
+}
 
 const inter = Inter({
     variable: "--font-inter",
@@ -20,10 +20,23 @@ export default function RootLayout({
 }) {
     return (
         <html lang="pt-br">
-            <body className={`
+            <body
+                className={`
                 bg-neutral-900 text-seashell-50
                 
-            `}>{children}</body>
+            `}
+            >
+                {children}
+                <footer className="w-full flex justify-center items-center py-6 ">
+                    <Link
+                        href="kaizin.com.br"
+                        target="_blank"
+                        className="text-sm underline m-auto"
+                    >
+                        Feito por Kaizin
+                    </Link>
+                </footer>
+            </body>
         </html>
     );
 }

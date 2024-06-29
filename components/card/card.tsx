@@ -56,11 +56,11 @@ export default function Card({
                     mb-[15px] z-20 relative
                 `}
             >
+                <div className="h-[7px] absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-3xl"></div>
                 <picture
                     className={` 
                         overflow-hidden h-[186px] w-full
                         flex justify-start items-center
-                        border-b-[7px] border-black
                     `}
                 >
                     {/* por algum motivo que vai alem das minhas humildes capacidades, se usar o image do next dá problema pra baixar a foto */}

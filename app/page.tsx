@@ -40,6 +40,7 @@ export default function Home() {
             ref={elementRef}
         >
             <CardBox />
+            
         </main>
     );
 }
