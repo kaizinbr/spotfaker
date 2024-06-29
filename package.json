@@ -1,5 +1,5 @@
 {
-    "name": "lyricard-gen",
+    "name": "spotfaker",
     "version": "1.0.0",
     "description": "Projeto simples de criação de cards com letras de músicas semelhantes aos cards de compartilhamento do Spotify.",
     "main": "next.config.js",
