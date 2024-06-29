@@ -30,7 +30,6 @@ const getAccessToken = async () => {
     return response.data.access_token;
 };
 
-export const runtime = "edge";
 
 export async function POST(req: Request) {
     const reqBody = await req.json();
