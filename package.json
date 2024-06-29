@@ -1,0 +1,44 @@
+{
+    "name": "lyricard-gen",
+    "version": "1.0.0",
+    "description": "Projeto simples de criação de cards com letras de músicas semelhantes aos cards de compartilhamento do Spotify.",
+    "main": "next.config.js",
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@types/node": "18.15.11",
+        "@types/react": "18.0.37",
+        "@types/react-dom": "18.0.11",
+        "@types/react-slick": "^0.23.12",
+        "@uiw/color-convert": "^2.0.3",
+        "@uiw/react-color-sketch": "^2.0.3",
+        "@uiw/react-color-swatch": "^2.0.3",
+        "@uiw/react-color-wheel": "^2.0.3",
+        "@vercel/blob": "^0.15.1",
+        "autoprefixer": "10.4.14",
+        "embla-carousel-react": "^8.0.0-rc15",
+        "eslint": "8.38.0",
+        "eslint-config-next": "13.3.0",
+        "html-to-image": "^1.11.11",
+        "nanoid": "^4.0.2",
+        "next": "^14.2.4",
+        "node-html-to-image": "^4.0.0",
+        "postcss": "8.4.22",
+        "react": "^18.2.0",
+        "react-dom": "18.2.0",
+        "react-hot-toast": "^2.4.0",
+        "react-icons": "^4.12.0",
+        "tailwindcss": "^3.3.6",
+        "typescript": "^5.5.2"
+    },
+    "devDependencies": {
+        "@types/ms": "^0.7.31",
+        "turbo": "^1.9.3"
+    },
+    "author": "",
+    "license": "ISC"
+}
