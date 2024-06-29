@@ -34,7 +34,6 @@ export default function Card({
     color: string;
     hideDay?: boolean;
 }) {
-    // console.log(coverUrl);
 
     const mes = new Date(data).toLocaleString("pt-br", { month: "long" });
     const dia = new Date(data).getUTCDate();
