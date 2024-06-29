@@ -73,7 +73,7 @@ export default function Uploader({setCoverUrl}: {setCoverUrl: any}) {
 
     return (
         <form
-            className="grid gap-6 max-w-[316px] "
+            className="grid gap-6 w-[316px] "
             onSubmit={onSubmit}
         >
             <div>

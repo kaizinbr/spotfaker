@@ -150,8 +150,8 @@ export default function CardBox() {
                 <div className="flex flex-col gap-4">
                     <div
                         className={`
-                            w-[348px] 
-                            px-4   
+                            w-full
+                            px-4   items-center justify-center
                             flex flex-col gap-8 m-auto
                         `}
                         key={2}
@@ -249,7 +249,7 @@ export default function CardBox() {
                                 className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
                                 value={musica2}
                                 onChange={handleMusica2Change}
-                                placeholder="Artista 2"
+                                placeholder="Música 2"
                             />
                         </label>
 
@@ -259,7 +259,7 @@ export default function CardBox() {
                                 className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
                                 value={musica3}
                                 onChange={handleMusica3Change}
-                                placeholder="Artista 3"
+                                placeholder="Música 3"
                             />
                         </label>
                         <label className="flex flex-col text-base font-bold">
@@ -268,7 +268,7 @@ export default function CardBox() {
                                 className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
                                 value={musica4}
                                 onChange={handleMusica4Change}
-                                placeholder="Artista 4"
+                                placeholder="Música 4"
                             />
                         </label>
                         <label className="flex flex-col text-base font-bold">
@@ -277,7 +277,7 @@ export default function CardBox() {
                                 className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
                                 value={musica5}
                                 onChange={handleMusica5Change}
-                                placeholder="Artista 5"
+                                placeholder="Música 5"
                             />
                         </label>
                     </div>
