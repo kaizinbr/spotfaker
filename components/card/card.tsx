@@ -15,7 +15,8 @@ export default function Card({
     musica5,
     coverUrl,
     minutos,
-    color
+    color,
+    hideDay
 }: {
     data: any;
     artista1: string;
@@ -31,14 +32,16 @@ export default function Card({
     coverUrl: string;
     minutos: number;
     color: string;
+    hideDay?: boolean;
 }) {
-    console.log(coverUrl);
+    // console.log(coverUrl);
 
     const mes = new Date(data).toLocaleString("pt-br", { month: "long" });
     const dia = new Date(data).getUTCDate();
     const ano = new Date(data).getFullYear();
     const newMinutos = minutos.toLocaleString();
     // console.log(newMinutos, minutos);
+    const showDia = hideDay ? " " + dia : "";
 
     return (
         <div
@@ -94,9 +97,9 @@ export default function Card({
                     alt="cover"
                     className="h-[17px]"
                 />
-                <span className="font-normal text-[9px] mt-[2px]">
-                    {mes} {dia}, {ano}
-                </span>
+                <p className="font-normal text-[9px] mt-[2px]">
+                    {mes}{showDia}, {ano}
+                </p>
             </div>
             <div
                 className={`

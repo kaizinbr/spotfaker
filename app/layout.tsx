@@ -19,17 +19,19 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="pt-br">
+        <html lang="pt-br"  className="scroll-smooth">
             <body
                 className={`
                 bg-neutral-900 text-seashell-50
+                scroll-smooth
                 
             `}
             >
                 {children}
+                
                 <footer className="w-full flex justify-center items-center py-6 ">
                     <Link
-                        href="kaizin.com.br"
+                        href="https://kaizin.com.br"
                         target="_blank"
                         className="text-sm underline m-auto"
                     >

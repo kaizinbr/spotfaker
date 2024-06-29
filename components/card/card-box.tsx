@@ -1,21 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useRef, useCallback } from "react";
 import Card from "./card";
-import { toPng, toJpeg } from "html-to-image";
+import { toPng
+ } from "html-to-image";
 import Uploader from "@/components/uploader";
-import Demo from "../color/colorWheel";
-import TextNLogo from "../color/textColor";
-import Carousel from "@/components/carousel/carousel";
-import { FontSize, Borders } from "../settings";
-import { customAlphabet } from "nanoid";
 
 import React from "react";
 import { EmblaOptionsType } from "embla-carousel-react";
 import "../css/base.css";
 import "../css/sandbox.css";
 import "../css/embla.css";
-
-const OPTIONS: EmblaOptionsType = {};
+import Search from "./Search";
 
 export default function CardBox() {
     const [coverUrl, setCoverUrl] = useState("/default.jpeg");
@@ -38,8 +33,14 @@ export default function CardBox() {
     const [musica3, setMusica3] = useState("");
     const [musica4, setMusica4] = useState("");
     const [musica5, setMusica5] = useState("");
+    const [showDay, setShowDay] = useState(true);
 
-    const [colors, setColors] = useState<string[]>(["#011313", "#fcf9e0", "#c8be9a", "#a67041"]);
+    const [colors, setColors] = useState<string[]>([
+        "#011313",
+        "#fcf9e0",
+        "#c8be9a",
+        "#a67041",
+    ]);
     const [lineColor, setLineColor] = useState<string>("#011313");
 
     function handleArtista1Change(e: { target: { value: any } }) {
@@ -89,12 +90,7 @@ export default function CardBox() {
             return;
         }
 
-        const nanoid = customAlphabet(
-            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-            7
-        );
-
-        toJpeg(ref.current, {
+        toPng(ref.current, {
             canvasWidth: 1080,
             canvasHeight: 1920,
             cacheBust: true,
@@ -104,7 +100,7 @@ export default function CardBox() {
         })
             .then((dataUrl) => {
                 const link = document.createElement("a");
-                link.download = `spotfaker-${nanoid}.jpeg`;
+                link.download = `spotfaker-${date}.png`;
                 link.href = dataUrl;
                 link.click();
             })
@@ -126,7 +122,7 @@ export default function CardBox() {
             `}
         >
             <div className="flex flex-col items-center gap-8 min-w-[40%]">
-                <div ref={ref} className="w-80">
+                <div ref={ref} className="w-80" id="canva">
                     <Card
                         data={date}
                         artista1={artista1}
@@ -142,6 +138,7 @@ export default function CardBox() {
                         coverUrl={coverUrl}
                         minutos={minutos}
                         color={lineColor}
+                        hideDay={showDay}
                     />
                 </div>
                 <button
@@ -158,11 +155,32 @@ export default function CardBox() {
 
             <div className="flex flex-col gap-4 w-full">
                 <div className="flex flex-col gap-4">
+                    <Search
+                        coverUrl={coverUrl}
+                        setCoverUrl={setCoverUrl}
+                        setColors={setColors}
+                    />
+                    <div className="flex flex-col p-4 rounded-xl bg-neutral-700/60">
+                        <span className="mb-2 text-xl font-bold">
+                            Cor da linha
+                        </span>
+                        <div className="flex flex-row flex-wrap gap-8 w-full justify-center">
+                            {colors.map((color, i) => (
+                                <button
+                                    key={i}
+                                    className="w-10 h-10 rounded-lg"
+                                    style={{ backgroundColor: color }}
+                                    onClick={() => setLineColor(color)}
+                                />
+                            ))}
+                        </div>
+                    </div>
                     <div
                         className={`
                             w-full
-                            px-4   items-center justify-center
+                            p-4   items-center justify-center
                             flex flex-col gap-8 m-auto
+                            rounded-xl bg-neutral-700/60
                         `}
                         key={2}
                     >
@@ -170,22 +188,6 @@ export default function CardBox() {
                             setCoverUrl={setCoverUrl}
                             setColors={setColors}
                         />
-                    </div>
-                    <div className="flex flex-col p-4 rounded-xl bg-neutral-700/60">
-                    <span className="mb-2 text-xl font-bold">
-                            Cor da linha
-                        </span>
-                            <div className="flex flex-row flex-wrap gap-8 w-full justify-center">
-                                {colors.map((color, i) => (
-                                    <button
-                                        key={i}
-                                        className="w-10 h-10 rounded-lg"
-                                        style={{ backgroundColor: color }}
-                                        onClick={() => setLineColor(color)}
-                                    />
-                                ))}
-                            </div>
-                        
                     </div>
                     <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
                         <label className="flex flex-col font-bold text-xl">
@@ -197,6 +199,31 @@ export default function CardBox() {
                                 onChange={(e) => setDate(e.target.value)}
                             />
                         </label>
+                        <div className="flex flex-row gap-3 font-bold text-base">
+                            <span className="mb-2">Mostrar dia</span>
+                            <div className="inline-flex items-center">
+                                <div className="relative inline-block w-8 h-4 rounded-full cursor-pointer">
+                                    <input
+                                        id="switch-component"
+                                        type="checkbox"
+                                        className="absolute w-8 h-4 transition-colors duration-300 rounded-full appearance-none cursor-pointer peer bg-gray-700 checked:bg-deluge-600 peer-checked:border-deluge-600 peer-checked:before:bg-deluge-600"
+                                        onChange={() =>
+                                            setShowDay(!showDay)
+                                        }
+                                        defaultChecked
+                                    />
+                                    <label
+                                        htmlFor="switch-component"
+                                        className="before:content[''] absolute top-2/4 -left-1 h-5 w-5 -translate-y-2/4 cursor-pointer rounded-full border border-gray-700 bg-white shadow-md transition-all duration-300 before:absolute before:top-2/4 before:left-2/4 before:block before:h-10 before:w-10 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity hover:before:opacity-10 peer-checked:translate-x-full peer-checked:border-gray-900 peer-checked:before:bg-gray-900"
+                                    >
+                                        <div
+                                            className="inline-block p-5 rounded-full top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4"
+                                            data-ripple-dark="true"
+                                        ></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">

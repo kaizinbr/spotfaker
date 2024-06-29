@@ -9,6 +9,7 @@ import { toPng, toJpeg, toBlob, toPixelData, toSvg } from "html-to-image";
 import { useRef } from "react";
 import CardBox from "@/components/card/card-box";
 import Carousel from "@/components/carousel/carousel";
+import UpBtn from "@/components/Up";
 
 export default function Home() {
     const elementRef = useRef(null);
@@ -35,12 +36,14 @@ export default function Home() {
     ];
 
     return (
-        <main
-            className="relative flex  flex-col items-center justify-center w-11/12 m-auto px-8 py-12"
-            ref={elementRef}
-        >
-            <CardBox />
-            
-        </main>
+        <>
+            <main
+                className="relative flex  flex-col items-center justify-center w-11/12 m-auto px-8 py-12"
+                ref={elementRef}
+            >
+                <CardBox />
+            </main>
+            <UpBtn />
+        </>
     );
 }
