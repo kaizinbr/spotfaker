@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useRef, useCallback } from "react";
 import Card from "./card";
-import { toPng } from "html-to-image";
+import { toPng, toJpeg } from "html-to-image";
 import Uploader from "@/components/uploader";
 import Demo from "../color/colorWheel";
 import TextNLogo from "../color/textColor";
@@ -21,7 +21,7 @@ export default function CardBox() {
     const [coverUrl, setCoverUrl] = useState("/default.jpeg");
 
     const day = new Date().getDate();
-    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    const month = (new Date().getMonth() + 1).toString().padStart(2, "0");
     const year = new Date().getFullYear();
     const [date, setDate] = useState(`${year}-${month}-${day}`);
 
@@ -38,6 +38,9 @@ export default function CardBox() {
     const [musica3, setMusica3] = useState("");
     const [musica4, setMusica4] = useState("");
     const [musica5, setMusica5] = useState("");
+
+    const [colors, setColors] = useState<string[]>(["#011313", "#fcf9e0", "#c8be9a", "#a67041"]);
+    const [lineColor, setLineColor] = useState<string>("#011313");
 
     function handleArtista1Change(e: { target: { value: any } }) {
         setArtista1(e.target.value);
@@ -91,10 +94,17 @@ export default function CardBox() {
             7
         );
 
-        toPng(ref.current, { canvasWidth: 1080, canvasHeight: 1920, cacheBust: true, pixelRatio: 2, quality: 1 })
+        toJpeg(ref.current, {
+            canvasWidth: 1080,
+            canvasHeight: 1920,
+            cacheBust: true,
+            pixelRatio: 2,
+            quality: 1,
+            style: { backdropFilter: "blur(64px)" },
+        })
             .then((dataUrl) => {
                 const link = document.createElement("a");
-                link.download = `spotfaker-${nanoid}.png`;
+                link.download = `spotfaker-${nanoid}.jpeg`;
                 link.href = dataUrl;
                 link.click();
             })
@@ -103,7 +113,6 @@ export default function CardBox() {
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ref]);
-
 
     return (
         <div
@@ -132,6 +141,7 @@ export default function CardBox() {
                         musica5={musica5}
                         coverUrl={coverUrl}
                         minutos={minutos}
+                        color={lineColor}
                     />
                 </div>
                 <button
@@ -156,7 +166,26 @@ export default function CardBox() {
                         `}
                         key={2}
                     >
-                        <Uploader setCoverUrl={setCoverUrl} />
+                        <Uploader
+                            setCoverUrl={setCoverUrl}
+                            setColors={setColors}
+                        />
+                    </div>
+                    <div className="flex flex-col p-4 rounded-xl bg-neutral-700/60">
+                    <span className="mb-2 text-xl font-bold">
+                            Cor da linha
+                        </span>
+                            <div className="flex flex-row flex-wrap gap-8 w-full justify-center">
+                                {colors.map((color, i) => (
+                                    <button
+                                        key={i}
+                                        className="w-10 h-10 rounded-lg"
+                                        style={{ backgroundColor: color }}
+                                        onClick={() => setLineColor(color)}
+                                    />
+                                ))}
+                            </div>
+                        
                     </div>
                     <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
                         <label className="flex flex-col font-bold text-xl">
@@ -169,7 +198,7 @@ export default function CardBox() {
                             />
                         </label>
                     </div>
-                    
+
                     <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
                         <label className="flex flex-col font-bold text-xl">
                             <span className="mb-2">Minutos</span>
@@ -177,12 +206,16 @@ export default function CardBox() {
                                 className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
                                 value={minutos}
                                 type="number"
-                                onChange={(e) => setMinutos(e.target.valueAsNumber)}
+                                onChange={(e) =>
+                                    setMinutos(e.target.valueAsNumber)
+                                }
                             />
                         </label>
                     </div>
                     <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
-                    <span className="mb-2 text-xl font-bold">Artistas favoritos</span>
+                        <span className="mb-2 text-xl font-bold">
+                            Artistas favoritos
+                        </span>
                         <label className="flex flex-col text-base font-bold">
                             Artista 1:
                             <input
@@ -199,7 +232,6 @@ export default function CardBox() {
                                 value={artista2}
                                 onChange={handleArtista2Change}
                                 placeholder="Artista 2"
-
                             />
                         </label>
                         <label className="flex flex-col text-base font-bold">
@@ -232,7 +264,9 @@ export default function CardBox() {
                         </label>
                     </div>
                     <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
-                    <span className="mb-2 text-xl font-bold">Músicas favoritas</span>
+                        <span className="mb-2 text-xl font-bold">
+                            Músicas favoritas
+                        </span>
 
                         <label className="flex flex-col text-base font-bold">
                             Música 1:

@@ -15,8 +15,8 @@ export default function Card({
     musica5,
     coverUrl,
     minutos,
+    color
 }: {
-    
     data: any;
     artista1: string;
     artista2: string;
@@ -30,6 +30,7 @@ export default function Card({
     musica5: string;
     coverUrl: string;
     minutos: number;
+    color: string;
 }) {
     console.log(coverUrl);
 
@@ -37,7 +38,7 @@ export default function Card({
     const dia = new Date(data).getUTCDate();
     const ano = new Date(data).getFullYear();
     const newMinutos = minutos.toLocaleString();
-    console.log(newMinutos, minutos);
+    // console.log(newMinutos, minutos);
 
     return (
         <div
@@ -47,7 +48,6 @@ export default function Card({
                 aspect-[9/16]
             `}
         >
-
             {/* <img src="/1.webp" alt="aa" className="w-[320px] max-w-none opacit z-10 absolute top-0" /> */}
             <div
                 className={`
@@ -56,10 +56,15 @@ export default function Card({
                     mb-[15px] z-20 relative
                 `}
             >
-                <div className="h-[7px] absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-3xl"></div>
+                <div
+                    id="blurred"
+                    className="h-[7px] absolute -bottom-1 left-0 right-0 "
+                    style={{ backgroundColor: `${color}` }}
+                >
+                </div>
                 <picture
                     className={` 
-                        overflow-hidden h-[186px] w-full
+                        overflow-hidden h-[182px] w-full
                         flex justify-start items-center
                     `}
                 >
@@ -84,8 +89,14 @@ export default function Card({
                     px-6 z-20 relative
                 `}
             >
-                <img src="/spotifypremium.png" alt="cover" className="h-[17px]" />
-                <span className="font-normal text-[9px] mt-[2px]">{mes}{" "}{dia},{" "}{ano}</span>
+                <img
+                    src="/spotifypremium.png"
+                    alt="cover"
+                    className="h-[17px]"
+                />
+                <span className="font-normal text-[9px] mt-[2px]">
+                    {mes} {dia}, {ano}
+                </span>
             </div>
             <div
                 className={`
@@ -95,7 +106,9 @@ export default function Card({
                 `}
             >
                 <div>
-                    <h2 className="font-bold text-[28px] tracking-tighter leading-[30px]">Minha Máquina do <br /> Tempo de {mes}</h2>
+                    <h2 className="font-bold text-[28px] tracking-tighter leading-[30px]">
+                        Minha Máquina do <br /> Tempo de {mes}
+                    </h2>
                 </div>
             </div>
             <div
@@ -105,25 +118,48 @@ export default function Card({
                     mt-3 px-6 z-20 relative
                 `}
             >
-                
-                <p className="font-bold text-sm leading-8 col-start-1">Artistas favoritos</p>
-                <p className="font-bold text-sm leading-8 col-start-2">Músicas favoritas</p>
+                <p className="font-bold text-sm leading-8 col-start-1">
+                    Artistas favoritos
+                </p>
+                <p className="font-bold text-sm leading-8 col-start-2">
+                    Músicas favoritas
+                </p>
                 <ul className="w-full pr-3 col-start-1">
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">1 {artista1}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">2 {artista2}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">3 {artista3}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">4 {artista4}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">5 {artista5}</li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        1 {artista1}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        2 {artista2}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        3 {artista3}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        4 {artista4}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        5 {artista5}
+                    </li>
                 </ul>
                 <ul className="w-full pr-2 col-start-2">
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">1 {musica1}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">2 {musica2}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">3 {musica3}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">4 {musica4}</li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">5 {musica5}</li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        1 {musica1}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        2 {musica2}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        3 {musica3}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        4 {musica4}
+                    </li>
+                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
+                        5 {musica5}
+                    </li>
                 </ul>
             </div>
-            
+
             <div
                 className={`
                     
@@ -132,9 +168,13 @@ export default function Card({
                 `}
             >
                 <div>
-                    <p className="font-bold text-[15px] tracking-[-0.07em] ">Tempo ouvindo</p>
+                    <p className="font-bold text-[15px] tracking-[-0.07em] ">
+                        Tempo ouvindo
+                    </p>
                 </div>
-                <h2 className="font-bold text-2xl tracking-tight leading-[30px] text-[#77FBA9]">{newMinutos} minutos</h2>
+                <h2 className="font-bold text-2xl tracking-tight leading-[30px] text-[#77FBA9]">
+                    {newMinutos} minutos
+                </h2>
             </div>
         </div>
     );

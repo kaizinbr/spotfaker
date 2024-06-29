@@ -4,14 +4,16 @@ import { useState, useCallback, useMemo, ChangeEvent } from "react";
 import toast from "react-hot-toast";
 import LoadingDots from "./loading-dots";
 import { PutBlobResult } from "@vercel/blob";
+import { extractColors } from "extract-colors";
 
-export default function Uploader({setCoverUrl}: {setCoverUrl: any}) {
+export default function Uploader({ setCoverUrl, setColors }: { setCoverUrl: any, setColors: any}) {
     const [data, setData] = useState<{
         image: string | null;
     }>({
         image: null,
     });
     const [file, setFile] = useState<File | null>(null);
+    
 
     const [dragActive, setDragActive] = useState(false);
 
@@ -51,31 +53,32 @@ export default function Uploader({setCoverUrl}: {setCoverUrl: any}) {
             fetch("/api/upload", {
                 method: "POST",
                 headers: {
-                    "content-type":
-                        file?.type || "application/octet-stream",
+                    "content-type": file?.type || "application/octet-stream",
                 },
                 body: file,
             }).then(async (res) => {
                 if (res.status === 200) {
                     const { url } = (await res.json()) as PutBlobResult;
                     setCoverUrl(url);
+                    extractColors(url, { crossOrigin: "anonymous" })
+                        .then((colors) => {
+                            console.log(colors);
+                            setColors(colors.map((c) => c.hex));
+                        })
+                        .catch(console.error);
                 } else {
                     const error = await res.text();
                     toast.error(error);
                 }
                 setSaving(false);
             });
+        } catch (e) {
+            console.log(e);
         }
-        catch (e) {
-            console.log(e)
-        }
-    }
+    };
 
     return (
-        <form
-            className="grid gap-6 w-[316px] "
-            onSubmit={onSubmit}
-        >
+        <form className="grid gap-6 w-[316px] " onSubmit={onSubmit}>
             <div>
                 <div className="space-y-1 mb-4">
                     <h2 className="text-xl font-semibold">Capa</h2>
