@@ -34,13 +34,14 @@ const getAccessToken = async () => {
 export async function POST(req: Request) {
     const reqBody = await req.json();
     const search = reqBody?.search ?? "";
-
+    const type = reqBody?.type ?? "artist";
+    console.log(search, type);
     const cookieStore = cookies()
     const hasCookie = cookieStore.has('spotify_token')
     let token = hasCookie ? cookieStore.get('spotify_token')!.value : await getAccessToken();
 
     const response = await axios.get(
-        `https://api.spotify.com/v1/search?q=${search}&type=artist&limit=10`,
+        `https://api.spotify.com/v1/search?q=${search}&type=${type}&limit=10`,
         {
             headers: {
                 Authorization: `Bearer ${token}`,

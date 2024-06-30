@@ -1,11 +1,14 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from 'next/router';
+import Nav from "@/components/Nav";
 
 export const metadata = {
-  title: 'Spotfaker - Kaizin',
-  description: 'esconda quem não deveria aparecer na sua máquina do tempo',
-}
+    title: "Spotfaker - Kaizin",
+    description: "esconda quem não deveria aparecer na sua máquina do tempo",
+};
 
 const inter = Inter({
     variable: "--font-inter",
@@ -19,7 +22,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="pt-br"  className="scroll-smooth">
+        <html lang="pt-br" className="scroll-smooth">
             <body
                 className={`
                 bg-neutral-900 text-seashell-50
@@ -27,8 +30,8 @@ export default function RootLayout({
                 
             `}
             >
+                <Nav />
                 {children}
-                
                 <footer className="w-full flex justify-center items-center py-6 ">
                     <Link
                         href="https://kaizin.com.br"

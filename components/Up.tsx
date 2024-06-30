@@ -8,8 +8,8 @@ export default function UpBtn() {
     useEffect(() => {
         const handleScroll = () => {
             const scrollPosition = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const targetElement = document.getElementById("canva");
+            const windowHeight = window.innerHeight - (window.innerHeight / 2);
+            const targetElement = document.getElementById("topo");
 
             if (targetElement && scrollPosition >= windowHeight) {
                 setShowButton(true);
@@ -27,7 +27,7 @@ export default function UpBtn() {
 
     return (
         <>
-                <Link href={"#canva"}
+                <Link href={"#topo"}
                     className={`
                             fixed right-4 bg-deluge-500 text-white p-4 rounded-full
                             transition-all duration-300 ease-in-out

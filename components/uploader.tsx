@@ -78,7 +78,7 @@ export default function Uploader({ setCoverUrl, setColors }: { setCoverUrl: any,
     };
 
     return (
-        <form className="grid gap-6 w-[316px] " onSubmit={onSubmit}>
+        <form className="grid gap-6 w-full max-w-[316px] " onSubmit={onSubmit}>
             <div>
                 <div className="space-y-1 mb-4">
                     <h2 className="text-xl font-semibold">Capa</h2>
