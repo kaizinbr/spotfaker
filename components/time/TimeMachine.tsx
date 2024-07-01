@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
+import { use, useEffect, useState } from "react";
 
 export default function TimeMachineCard({
     data,
@@ -16,7 +17,10 @@ export default function TimeMachineCard({
     coverUrl,
     minutos,
     color,
-    hideDay
+    hideDay,
+    artistas,
+    musicas,
+    manual,
 }: {
     data: any;
     artista1: string;
@@ -33,14 +37,57 @@ export default function TimeMachineCard({
     minutos: number;
     color: string;
     hideDay?: boolean;
+    artistas?: any;
+    musicas?: any;
+    manual?: boolean;
 }) {
-
     const mes = new Date(data).toLocaleString("pt-br", { month: "long" });
     const dia = new Date(data).getUTCDate();
     const ano = new Date(data).getFullYear();
     const newMinutos = minutos.toLocaleString();
     // console.log(newMinutos, minutos);
     const showDia = hideDay ? " " + dia : "";
+    const [artistasFavoritos, setArtistasFavoritos] = useState<{name: string}[]>([]);
+    const [musicasFavoritas, setMusicasFavoritas] = useState<{name: string}[]>([]);
+
+    useEffect(() => {
+        console.log(artistas)
+        if (manual) {
+            setArtistasFavoritos([
+                { name: artista1 },
+                { name: artista2 },
+                { name: artista3 },
+                { name: artista4 },
+                { name: artista5 },
+            ]);
+        } else {
+            setArtistasFavoritos(artistas);
+        }
+    }, [artistas, manual, artista1, artista2, artista3, artista4, artista5]);
+
+    useEffect(() => {
+        if (manual) {
+            setMusicasFavoritas([
+                { name: musica1 },
+                { name: musica2 },
+                { name: musica3 },
+                { name: musica4 },
+                { name: musica5 },
+            ]);
+        } else {
+            setMusicasFavoritas(musicas);
+        }
+    }, [musicas, manual, musica1, musica2, musica3, musica4, musica5]);
+
+    // let artistasFavoritos = manual
+    //     ? [
+    //           { name: artista1 },
+    //           { name: artista2 },
+    //           { name: artista3 },
+    //           { name: artista4 },
+    //           { name: artista5 },
+    //       ]
+    //     : artistas;
 
     return (
         <div
@@ -62,8 +109,7 @@ export default function TimeMachineCard({
                     id="blurred"
                     className="h-[7px] absolute -bottom-1 left-0 right-0 "
                     style={{ backgroundColor: `${color}` }}
-                >
-                </div>
+                ></div>
                 <picture
                     className={` 
                         overflow-hidden h-[182px] w-full
@@ -97,7 +143,8 @@ export default function TimeMachineCard({
                     className="h-[17px]"
                 />
                 <p className="font-normal text-[9px] mt-[2px]">
-                    {mes}{showDia}, {ano}
+                    {mes}
+                    {showDia}, {ano}
                 </p>
             </div>
             <div
@@ -126,39 +173,31 @@ export default function TimeMachineCard({
                 <p className="font-bold text-sm leading-8 col-start-2">
                     Músicas favoritas
                 </p>
-                <ul className="w-full pr-3 col-start-1">
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        1 {artista1}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        2 {artista2}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        3 {artista3}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        4 {artista4}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        5 {artista5}
-                    </li>
+                <ul
+                    className={`
+                        w-full pr-3 col-start-1
+                        flex flex-col 
+                    `}
+                >
+                    {artistasFavoritos?.map((artista: any, index: number) => (
+                        <li
+                            key={index}
+                            className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all"
+                        >
+                            {index + 1} {artista.name}
+                        </li>
+                    )
+                    )}
                 </ul>
                 <ul className="w-full pr-2 col-start-2">
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        1 {musica1}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        2 {musica2}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        3 {musica3}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        4 {musica4}
-                    </li>
-                    <li className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all">
-                        5 {musica5}
-                    </li>
+                    {musicasFavoritas?.map((musica: any, index: number) => (
+                        <li
+                            key={index}
+                            className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all"
+                        >
+                            {index + 1} {musica.name}
+                        </li>
+                    ))}
                 </ul>
             </div>
 

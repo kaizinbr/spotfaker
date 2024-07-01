@@ -24,6 +24,7 @@
         "eslint": "8.38.0",
         "eslint-config-next": "13.3.0",
         "extract-colors": "^4.0.6",
+        "framer-motion": "^11.2.12",
         "html-to-image": "^1.11.11",
         "lucide-react": "^0.399.0",
         "nanoid": "^4.0.2",

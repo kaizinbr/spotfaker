@@ -1,15 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useRef, useCallback } from "react";
 import TimeMachineCard from "./TimeMachine";
-import { toPng
- } from "html-to-image";
+import { toPng } from "html-to-image";
 import Uploader from "@/components/uploader";
+
+import { Reorder } from "framer-motion";
 
 import React from "react";
 import "../css/base.css";
 import "../css/sandbox.css";
 import "../css/embla.css";
 import Search from "./Search";
+import ColorLine from "./ColorLine";
+import DateControllers from "./DateControllers";
+import MinController from "./MinController";
+import ArtistEditor from "./ArtistEditor";
+import MusicEditor from "./MusicEditor";
+import SearchOther from "./SearchOther";
+import { Item } from "./Item";
+
+const initialItems = ["🍅 Tomato", "🥒 Cucumber", "🧀 Cheese", "🥬 Lettuce"];
 
 export default function CardBox() {
     const [coverUrl, setCoverUrl] = useState("/default.jpeg");
@@ -33,6 +43,21 @@ export default function CardBox() {
     const [musica4, setMusica4] = useState("");
     const [musica5, setMusica5] = useState("");
     const [showDay, setShowDay] = useState(true);
+
+    const [artistas, setArtistas] = useState<
+        { id: string; image: string; name: string; type: string }[]
+    >([]);
+    const [musicas, setMusicas] = useState<
+        { id: string; image: string; name: string; type: string }[]
+    >([]);
+    const [manual, setManual] = useState<boolean>(false);
+
+    const [items, setItems] = useState(initialItems);
+
+    // function handleArtistasChange(e: { target: { value: any } }) {
+    //     setArtistas([...artistas, e.target.value]);
+    //     console.log()
+    // }
 
     const [colors, setColors] = useState<string[]>([
         "#011313",
@@ -122,35 +147,38 @@ export default function CardBox() {
         >
             <div className="min-w-[40%] lg:sticky lg:min-h-lvh top-0 flex flex-col items-center justify-center gap-8">
                 {/* <div className=" overflow-visible"> */}
-                    <div ref={ref} className="w-80" id="canva">
-                        <TimeMachineCard
-                            data={date}
-                            artista1={artista1}
-                            artista2={artista2}
-                            artista3={artista3}
-                            artista4={artista4}
-                            artista5={artista5}
-                            musica1={musica1}
-                            musica2={musica2}
-                            musica3={musica3}
-                            musica4={musica4}
-                            musica5={musica5}
-                            coverUrl={coverUrl}
-                            minutos={minutos}
-                            color={lineColor}
-                            hideDay={showDay}
-                        />
-                    </div>
-                    <button
-                        className={`
+                <div ref={ref} className="w-80" id="canva">
+                    <TimeMachineCard
+                        data={date}
+                        artista1={artista1}
+                        artista2={artista2}
+                        artista3={artista3}
+                        artista4={artista4}
+                        artista5={artista5}
+                        musica1={musica1}
+                        musica2={musica2}
+                        musica3={musica3}
+                        musica4={musica4}
+                        musica5={musica5}
+                        coverUrl={coverUrl}
+                        minutos={minutos}
+                        color={lineColor}
+                        hideDay={showDay}
+                        artistas={artistas}
+                        musicas={musicas}
+                        manual={manual}
+                    />
+                </div>
+                <button
+                    className={`
                             bg-deluge-600 text-neutral-100 px-8 py-2 rounded-full border border-deluge-600
                             transition duration-500
                             hover:bg-neutral-600
                         `}
-                        onClick={onButtonClick}
-                    >
-                        Baixar
-                    </button>
+                    onClick={onButtonClick}
+                >
+                    Baixar
+                </button>
                 {/* </div> */}
             </div>
 
@@ -162,21 +190,7 @@ export default function CardBox() {
                         setColors={setColors}
                         type="artist"
                     />
-                    <div className="flex flex-col p-4 rounded-xl bg-neutral-700/60">
-                        <span className="mb-2 text-xl font-bold">
-                            Cor da linha
-                        </span>
-                        <div className="flex flex-row flex-wrap gap-8 w-full justify-center">
-                            {colors.map((color, i) => (
-                                <button
-                                    key={i}
-                                    className="w-10 h-10 rounded-lg"
-                                    style={{ backgroundColor: color }}
-                                    onClick={() => setLineColor(color)}
-                                />
-                            ))}
-                        </div>
-                    </div>
+                    <ColorLine colors={colors} setLineColor={setLineColor} />
                     <div
                         className={`
                             w-full
@@ -191,31 +205,34 @@ export default function CardBox() {
                             setColors={setColors}
                         />
                     </div>
-                    <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
-                        <label className="flex flex-col font-bold text-xl">
-                            <span className="mb-2">Data</span>
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={date}
-                                type="date"
-                                onChange={(e) => setDate(e.target.value)}
-                            />
-                        </label>
+                    <DateControllers
+                        date={date}
+                        setDate={setDate}
+                        showDay={showDay}
+                        setShowDay={setShowDay}
+                    />
+
+                    <MinController minutos={minutos} setMinutos={setMinutos} />
+                    <div
+                        className={`
+                            w-full
+                            p-4   items-center justify-center
+                            flex flex-col gap-8 m-auto
+                            rounded-xl bg-neutral-700/60
+                        `}
+                    >
                         <div className="flex flex-row gap-3 font-bold text-base">
-                            <span className="mb-2">Mostrar dia</span>
+                            <span className="">Adicionar manualmente</span>
                             <div className="inline-flex items-center">
                                 <div className="relative inline-block w-8 h-4 rounded-full cursor-pointer">
                                     <input
-                                        id="switch-component"
+                                        id="switch-write-mode"
                                         type="checkbox"
                                         className="absolute w-8 h-4 transition-colors duration-300 rounded-full appearance-none cursor-pointer peer bg-gray-700 checked:bg-deluge-600 peer-checked:border-deluge-600 peer-checked:before:bg-deluge-600"
-                                        onChange={() =>
-                                            setShowDay(!showDay)
-                                        }
-                                        defaultChecked
+                                        onChange={() => setManual(!manual)}
                                     />
                                     <label
-                                        htmlFor="switch-component"
+                                        htmlFor="switch-write-mode"
                                         className="before:content[''] absolute top-2/4 -left-1 h-5 w-5 -translate-y-2/4 cursor-pointer rounded-full border border-gray-700 bg-white shadow-md transition-all duration-300 before:absolute before:top-2/4 before:left-2/4 before:block before:h-10 before:w-10 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity hover:before:opacity-10 peer-checked:translate-x-full peer-checked:border-gray-900 peer-checked:before:bg-gray-900"
                                     >
                                         <div
@@ -227,123 +244,115 @@ export default function CardBox() {
                             </div>
                         </div>
                     </div>
-
-                    <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
-                        <label className="flex flex-col font-bold text-xl">
-                            <span className="mb-2">Minutos</span>
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={minutos}
-                                type="number"
-                                onChange={(e) =>
-                                    setMinutos(e.target.valueAsNumber)
-                                }
+                    {manual ? (
+                        <>
+                            <ArtistEditor
+                                artista1={artista1}
+                                handleArtista1Change={handleArtista1Change}
+                                artista2={artista2}
+                                handleArtista2Change={handleArtista2Change}
+                                artista3={artista3}
+                                handleArtista3Change={handleArtista3Change}
+                                artista4={artista4}
+                                handleArtista4Change={handleArtista4Change}
+                                artista5={artista5}
+                                handleArtista5Change={handleArtista5Change}
                             />
-                        </label>
-                    </div>
-                    <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
-                        <span className="mb-2 text-xl font-bold">
-                            Artistas favoritos
-                        </span>
-                        <label className="flex flex-col text-base font-bold">
-                            Artista 1:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={artista1}
-                                onChange={handleArtista1Change}
-                                placeholder="Artista 1"
+                            <MusicEditor
+                                musica1={musica1}
+                                handleMusica1Change={handleMusica1Change}
+                                musica2={musica2}
+                                handleMusica2Change={handleMusica2Change}
+                                musica3={musica3}
+                                handleMusica3Change={handleMusica3Change}
+                                musica4={musica4}
+                                handleMusica4Change={handleMusica4Change}
+                                musica5={musica5}
+                                handleMusica5Change={handleMusica5Change}
                             />
-                        </label>
-                        <label className="flex flex-col text-base font-bold">
-                            Artista 2:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={artista2}
-                                onChange={handleArtista2Change}
-                                placeholder="Artista 2"
-                            />
-                        </label>
-                        <label className="flex flex-col text-base font-bold">
-                            Artista 3:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={artista3}
-                                onChange={handleArtista3Change}
-                                placeholder="Artista 3"
-                            />
-                        </label>
-                        <label className="flex flex-col text-base font-bold">
-                            Artista 4:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={artista4}
-                                onChange={handleArtista4Change}
-                                placeholder="Artista 4"
-                            />
-                        </label>
-
-                        <label className="flex flex-col text-base font-bold">
-                            Artista 5:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={artista5}
-                                onChange={handleArtista5Change}
-                                placeholder="Artista 5"
-                            />
-                        </label>
-                    </div>
-                    <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
-                        <span className="mb-2 text-xl font-bold">
-                            Músicas favoritas
-                        </span>
-
-                        <label className="flex flex-col text-base font-bold">
-                            Música 1:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={musica1}
-                                onChange={handleMusica1Change}
-                                placeholder="Artista 1"
-                            />
-                        </label>
-                        <label className="flex flex-col text-base font-bold">
-                            Música 2:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={musica2}
-                                onChange={handleMusica2Change}
-                                placeholder="Música 2"
-                            />
-                        </label>
-
-                        <label className="flex flex-col text-base font-bold">
-                            Música 3:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={musica3}
-                                onChange={handleMusica3Change}
-                                placeholder="Música 3"
-                            />
-                        </label>
-                        <label className="flex flex-col text-base font-bold">
-                            Música 4:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={musica4}
-                                onChange={handleMusica4Change}
-                                placeholder="Música 4"
-                            />
-                        </label>
-                        <label className="flex flex-col text-base font-bold">
-                            Música 5:
-                            <input
-                                className="text-base font-medium  border border-transparent focus:border-deluge-600 px-3 py-2 mb-3 outline-none bg-neutral-800 focus:bg-neutral-700 rounded-lg transition duration-300"
-                                value={musica5}
-                                onChange={handleMusica5Change}
-                                placeholder="Música 5"
-                            />
-                        </label>
-                    </div>
+                        </>
+                    ) : (
+                        <>
+                            <div
+                                className={`
+                                w-full
+                                p-4
+                                flex flex-col m-auto
+                                rounded-xl bg-neutral-700/60
+                            `}
+                            >
+                                <span className="mb-4 text-xl font-bold">
+                                    Artistas favoritos
+                                </span>
+                                <Reorder.Group
+                                    axis="y"
+                                    onReorder={setArtistas}
+                                    values={artistas}
+                                    className="flex flex-col gap-2 mb-4 w-full"
+                                >
+                                    <span className="text-sm text-neutral-300">
+                                        Você poder reordená-los depois
+                                    </span>
+                                    {artistas.map((item) => (
+                                        <Item
+                                            key={item.id}
+                                            item={item}
+                                            type="artist"
+                                            setData={setArtistas}
+                                            data={artistas}
+                                        />
+                                    ))}
+                                </Reorder.Group>
+                                <SearchOther
+                                    coverUrl={coverUrl}
+                                    setCoverUrl={setCoverUrl}
+                                    setColors={setColors}
+                                    type="artist"
+                                    setArtistas={setArtistas}
+                                    artistas={artistas}
+                                />
+                            </div>
+                            <div
+                                className={`
+                                w-full
+                                p-4
+                                flex flex-col m-auto
+                                rounded-xl bg-neutral-700/60
+                            `}
+                            >
+                                <span className="mb-4 text-xl font-bold">
+                                    Músicas favoritas
+                                </span>
+                                <Reorder.Group
+                                    axis="y"
+                                    onReorder={setMusicas}
+                                    values={musicas}
+                                    className="flex flex-col gap-2 mb-4 w-full"
+                                >
+                                    <span className="text-sm text-neutral-300">
+                                        Você poder reordená-los depois
+                                    </span>
+                                    {musicas.map((item) => (
+                                        <Item
+                                            key={item.id}
+                                            item={item}
+                                            setData={setMusicas}
+                                            data={musicas}
+                                            type="track"
+                                        />
+                                    ))}
+                                </Reorder.Group>
+                                <SearchOther
+                                    coverUrl={coverUrl}
+                                    setCoverUrl={setCoverUrl}
+                                    setColors={setColors}
+                                    type="track"
+                                    setMusicas={setMusicas}
+                                    musicas={musicas}
+                                />
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
