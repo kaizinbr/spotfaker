@@ -19,7 +19,7 @@ import MusicEditor from "./MusicEditor";
 import SearchOther from "./SearchOther";
 import { Item } from "./Item";
 
-const initialItems = ["🍅 Tomato", "🥒 Cucumber", "🧀 Cheese", "🥬 Lettuce"];
+// const initialItems = ["🍅 Tomato", "🥒 Cucumber", "🧀 Cheese", "🥬 Lettuce"];
 
 export default function CardBox() {
     const [coverUrl, setCoverUrl] = useState("/default.jpeg");
@@ -48,11 +48,11 @@ export default function CardBox() {
         { id: string; image: string; name: string; type: string }[]
     >([]);
     const [musicas, setMusicas] = useState<
-        { id: string; image: string; name: string; type: string }[]
+        { id: string; image: string; name: string; type: string, artist?: string }[]
     >([]);
     const [manual, setManual] = useState<boolean>(false);
 
-    const [items, setItems] = useState(initialItems);
+    // const [items, setItems] = useState(initialItems);
 
     // function handleArtistasChange(e: { target: { value: any } }) {
     //     setArtistas([...artistas, e.target.value]);
@@ -189,6 +189,7 @@ export default function CardBox() {
                         setCoverUrl={setCoverUrl}
                         setColors={setColors}
                         type="artist"
+                        label="Pesquise seu artista mais ouvido"
                     />
                     <ColorLine colors={colors} setLineColor={setLineColor} />
                     <div

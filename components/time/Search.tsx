@@ -11,6 +11,7 @@ export default function Search({
     type,
     setTitle,
     setArtist,
+    label,
 }: {
     coverUrl: string;
     setCoverUrl: any;
@@ -18,6 +19,7 @@ export default function Search({
     type: string;
     setTitle?: any;
     setArtist?: any;
+    label?: string;
 }) {
     const elementRef = useRef(null);
 
@@ -67,7 +69,7 @@ export default function Search({
 
     return (
         <div className="flex flex-col gap-2 p-4 rounded-xl bg-neutral-700/60">
-            <h1 className="mb-2 text-xl font-bold">Buscar do Spotify</h1>
+            <h1 className="mb-2 text-xl font-bold">{label ? label : "Pesquise do Spotify"}</h1>
             <label className="flex flex-col font-bold text-base">
                 {/* <span className="mb-2">Selecione o artista</span> */}
                 <input

@@ -6,8 +6,8 @@ import Link from "next/link";
 export default function Home() {
     return (
         <>
-            <main className="relative flex  flex-col items-center justify-center w-11/12 m-auto px-8 py-12">
-                <h1 className="text-4xl font-bold text-center mb-8" id="topo">
+            <main className="relative flex  flex-col items-center justify-center w-full m-auto px-4 md:px-8 py-12">
+                <h1 className="text-2xl md:text-4xl font-bold text-center mb-8" id="topo">
                     Minha Máquina do Tempo
                 </h1>
                 <CardBox />

@@ -74,6 +74,7 @@ export default function SearchOther({
                 })
                 .then((response) => {
                     setTracksResults(response.data.tracks.items);
+                    console.log(response.data.tracks.items)
                 })
                 .catch((error) => {
                     console.log(error);
@@ -103,12 +104,17 @@ export default function SearchOther({
                                 key={track.id}
                                 className="flex flex-row items-center p-2 rounded-lg hover:bg-neutral-600 bg-transparent transition-all duration-300"
                                 onClick={() => {
+                                    const allArtists = track.artists.map(
+                                        (artist) => artist.name
+                                    );
+
                                     if (musicas.length < 5 && !musicas.some((a: any) => a.id === track.id)) {
                                         setMusicas((prevMusicas: any) => [...prevMusicas, {
                                                 id: track.id,
                                                 image: track.album.images[0]?.url,
                                                 name: track.name,
                                                 type: "track",
+                                                artist: allArtists.join(", "),
                                         }])
                                     }
                                     setQuery("");

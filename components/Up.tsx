@@ -30,7 +30,7 @@ export default function UpBtn() {
                 <Link href={"#topo"}
                     className={`
                             fixed right-4 bg-deluge-500 text-white p-4 rounded-full
-                            transition-all duration-300 ease-in-out
+                            transition-all duration-300 ease-in-out z-40
                             ${showButton ? " bottom-4" : " -bottom-24"}
                         `}
                 >
