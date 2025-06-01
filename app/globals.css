@@ -78,3 +78,10 @@ body {
     --alpha-pointer-background-color: #6a6a6a !important;
     --alpha-pointer-box-shadow: rgb(0 0 0 / 37%) 0px 1px 4px 0px !important;
 }
+
+
+.time-machine-line {
+    
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+}

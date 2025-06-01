@@ -97,17 +97,17 @@ export default function TimeMachineCard({
                 aspect-[9/16]
             `}
         >
-            {/* <img src="/1.webp" alt="aa" className="w-[320px] max-w-none opacit z-10 absolute top-0" /> */}
+            {/* <img src="/time.webp" alt="aa" className="w-[320px] max-w-none opacity-50 z-10 absolute top-0" /> */}
             <div
                 className={`
                     header
                     flex flex-row gap-3
-                    mb-[15px] z-20 relative
+                    mb-[19px] z-20 relative
                 `}
             >
                 <div
                     id="blurred"
-                    className="h-[7px] absolute -bottom-1 left-0 right-0 "
+                    className="h-[6px] absolute -bottom-[0.09rem] left-0 right-0"
                     style={{ backgroundColor: `${color}` }}
                 ></div>
                 <picture
@@ -116,7 +116,6 @@ export default function TimeMachineCard({
                         flex justify-start items-center
                     `}
                 >
-                    {/* por algum motivo que vai alem das minhas humildes capacidades, se usar o image do next dá problema pra baixar a foto */}
                     <img
                         src={coverUrl}
                         alt="cover"
@@ -155,7 +154,7 @@ export default function TimeMachineCard({
                 `}
             >
                 <div>
-                    <h2 className="font-bold text-[28px] tracking-tighter leading-[30px]">
+                    <h2 className="font-bold text-[28px] tracking-[-0.03em] leading-[30px]">
                         Minha Máquina do <br /> Tempo de {mes}
                     </h2>
                 </div>
@@ -182,7 +181,7 @@ export default function TimeMachineCard({
                     {artistasFavoritos?.map((artista: any, index: number) => (
                         <li
                             key={index}
-                            className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all"
+                            className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all time-machine-line"
                         >
                             {index + 1} {artista.name}
                         </li>
@@ -193,7 +192,7 @@ export default function TimeMachineCard({
                     {musicasFavoritas?.map((musica: any, index: number) => (
                         <li
                             key={index}
-                            className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all"
+                            className="text-sm leading-[1.16rem] tracking-[-0.035em] line-clamp-1 break-all time-machine-line"
                         >
                             {index + 1} {musica.name}
                         </li>
@@ -209,96 +208,14 @@ export default function TimeMachineCard({
                 `}
             >
                 <div>
-                    <p className="font-bold text-[15px] tracking-[-0.07em] ">
+                    <p className="font-bold text-[15px] tracking-[-0.03em] ">
                         Tempo ouvindo
                     </p>
                 </div>
-                <h2 className="font-bold text-2xl tracking-tight leading-[30px] text-[#77FBA9]">
+                <h2 className="font-bold text-2xl tracking-[-0.01em] leading-[30px] text-[#77FBA9]">
                     {newMinutos} minutos
                 </h2>
             </div>
         </div>
     );
-}
-
-{
-    /* <div
-                className={` 
-                bg-indigo-300 rounded-2xl px-3 py-4
-                transition-all duration-500
-                w-80 
-                ${className}
-            `}
-                style={{ backgroundColor: "#" + bgColor }}
-            >
-                <div
-                    className={`
-                    header
-                    flex flex-row gap-3
-                    mb-5
-                `}
-                >
-                    <div>
-                        <Image
-                            src="/txt.jpg"
-                            alt="cover"
-                            width={32}
-                            height={32}
-                            className={`
-                            rounded-md
-                        `}
-                        />
-                    </div>
-                    <div
-                        className={`
-                        flex flex-col
-                    `}
-                    >
-                        <h2
-                            className={`
-                            font-black text-[13px]
-                        `}
-                        >
-                            ANTIFRAGILE
-                        </h2>
-                        <p
-                            className={`
-                            text-[10px]
-                        `}
-                        >
-                            LE SSERAFIM
-                        </p>
-                    </div>
-                </div>
-                <div
-                    className={`
-                    body
-                    flex flex-col gap-2
-                    text-sm font-bold
-                `}
-                >
-                    <p>Caralho! Que pau ignorante</p>
-                    <p>Parece muito mais um vidro de desodorante</p>
-                    <p>Eu to chocada! Que pica exuberante</p>
-                    <p>Parece muito mais uma tromba de elefante</p>
-                    <p>Vem me arrombar gostoso</p>
-                </div>
-                <div
-                    className={`
-                    footer
-                    flex flex-row justify-between
-                    mt-5
-                `}
-                >
-                    
-                    <div>
-                        <Image
-                            src="/spotify-icons-logos/logos/01_RGB/02_PNG/Spotify_Logo_RGB_Black.png"
-                            alt="cover"
-                            width={70}
-                            height={24}
-                        />
-                    </div>
-                </div>
-            </div> */
 }
