@@ -25,7 +25,7 @@ const getAccessToken = async () => {
     );
     // console.log(response.data);
 
-    cookies().set('spotify_token', response.data.access_token, { path: '/', maxAge: 3600, sameSite: 'lax'})
+    (await cookies()).set('spotify_token', response.data.access_token, { path: '/', maxAge: 3600, sameSite: 'lax'})
 
     return response.data.access_token;
 };
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const search = reqBody?.search ?? "";
     const type = reqBody?.type ?? "artist";
     console.log(search, type);
-    const cookieStore = cookies()
+    const cookieStore = await cookies()
     const hasCookie = cookieStore.has('spotify_token')
     let token = hasCookie ? cookieStore.get('spotify_token')!.value : await getAccessToken();
 
